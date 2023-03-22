@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import psycopg2
 from countryinfo import CountryInfo
-import os
+import time
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -26,7 +26,6 @@ class Population:
         count = 0
 
         for row in rows[3:]:
-            # for row in rows[150:191]:
             try:
                 cells = row.find_all('td')
                 if len(cells) >= 2:
@@ -40,9 +39,7 @@ class Population:
                     region = self.check_region(country).region()
                     if region:
                         self.insert_data(country, population_clear, region)
-                    # print(type(region))
 
-                    # self.insert_data(country, population_clear, 'Undefined')
                 continue
             except Exception as e:
                 cells = row.find_all('td')
@@ -51,12 +48,10 @@ class Population:
                 population_ = population.replace(',', '')
                 population_clear = int(float(population_))
                 self.insert_data(country, population_clear, 'Undefined')
-                # print(e, 'Undefined')
                 count += 1
                 continue
 
-        # print(count)
-        print('Done')
+        print('Parsing success!')
 
     def check_region(self, country):
         return CountryInfo(country)
@@ -86,6 +81,7 @@ class Population:
 
 
 if __name__ == '__main__':
+    time.sleep(5)
     scraper = Population('https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population',
                          db_host='db',
                          db_port=5432,

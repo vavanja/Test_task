@@ -1,5 +1,5 @@
 import psycopg2
-import os
+import time
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -62,6 +62,7 @@ class CountryPopulation:
 
 
 if __name__ == '__main__':
+    time.sleep(5)
     scraper = CountryPopulation(
         db_host='db',
         db_port=5432,
