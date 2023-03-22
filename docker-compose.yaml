@@ -8,9 +8,7 @@ services:
       - POSTGRES_USER=parser_user
       - POSTGRES_PASSWORD=parser
       - POSTGRES_DB=population_db
-    ports:
-      - "5432:5432"
-      -
+
   get_data:
     build: ./get_data
     command: ["python", "main.py"]
