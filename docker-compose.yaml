@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=parser_user
+      - POSTGRES_PASSWORD=parser
+      - POSTGRES_DB=population_db
+
+  get_data:
+    build: ./get_data
+    command: ["python", "main.py"]
+    volumes:
+      - ./get_data:/app
+    environment:
+      - POSTGRES_USER=parser_user
+      - POSTGRES_PASSWORD=parser
+      - POSTGRES_DB=population_db
+    depends_on:
+      - db
+
+  print_data:
+    build: ./print_data
+    command: ["python", "print_data.py"]
+    volumes:
+      - ./print_data:/app
+    environment:
+      - POSTGRES_USER=parser_user
+      - POSTGRES_PASSWORD=parser
+      - POSTGRES_DB="${DB_NAME}"
+    depends_on:
+      - db
