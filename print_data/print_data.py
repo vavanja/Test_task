@@ -49,7 +49,7 @@ class CountryPopulation:
         rows = cur.fetchall()
 
         for row in rows:
-            print(f"{row[0]}: {row[1]}| Biggest country: {row[2]} ({row[3]}) | Smallest country: {row[4]} ({row[5]})")
+            print(f"{row[0]}: {row[1]} | Biggest country: {row[2]} ({row[3]}) | Smallest country: {row[4]} ({row[5]})")
 
         cur.close()
         conn.close()
